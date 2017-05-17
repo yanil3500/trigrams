@@ -8,9 +8,10 @@ def solution_trigrams(text, number_of_words):
     """
     function that creates new story
     """
-    print(number_of_words)
-    print(text)
+    print('Number of words: ', number_of_words)
+    print('Text: ', text)
 
 
 if __name__ == '__main__':
-    solution_trigrams(sys.argv[0])
+    solution_trigrams(sys.argv[1], sys.argv[2])
+
