@@ -13,7 +13,11 @@ def solution_trigrams(text, number_of_words):
 
 
 def create_trigrams(text):
-    text_list = text.split(' ')
+    from string import punctuation
+    exclude_punctuation = set(punctuation)
+    text_list = ''.join(punc for punc in text if punc not in exclude_punctuation)
+    text_list = text_list.split(' ')
+    print(text_list)
     words_trigrams = {}
     for index in range(len(text_list)-1):
         trigram_key = text_list[index]+' '+text_list[index + 1]
@@ -28,7 +32,7 @@ def create_trigrams(text):
 
 
 
-print(create_trigrams('I wish I may I wish I might'))
+print(create_trigrams('I wish, I may, I wish ,I might.'))
 if __name__ == '__main__':
     solution_trigrams(sys.argv[1], sys.argv[2])
 
