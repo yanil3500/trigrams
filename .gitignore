@@ -85,6 +85,9 @@ celerybeat-schedule
 # dotenv
 .env
 
+my_submission.txt
+
+sherlock.txt
 # virtualenv
 .venv
 venv/
