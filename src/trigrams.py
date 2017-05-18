@@ -12,11 +12,12 @@ def solution_trigrams(text, number_of_words):
     print('Text: ', text)
     with open(text) as infile:
         data = infile.read()
-        create_trigrams(data)
+        print(create_trigrams(data))
+
 
 
 def create_trigrams(text):
-    text_list = remove_punctuation(text).split(' ')
+    text_list = remove_punctuation(text, ' ').split(' ')
     print('Inside of create_trigrams: ', text_list)
     words_trigrams = {}
     for index in range(len(text_list)-1):
@@ -31,16 +32,17 @@ def create_trigrams(text):
     return words_trigrams
 
 
-def remove_punctuation(text):
+def remove_punctuation(text, punc):
     """
     removes punctuation and newlines
     """
     from string import punctuation
     exclude_punctuation = set(punctuation)
-    text_list = ''.join(punc for punc in text if punc not in exclude_punctuation)
+    text_list = text.replace('\n', punc)
+    text_list = text_list.replace('-', ' ')
+    text_list = ''.join(punc for punc in text_list if punc not in exclude_punctuation)
     return text_list
 
 
 if __name__ == '__main__':
     solution_trigrams(sys.argv[1], sys.argv[2])
-
