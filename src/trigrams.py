@@ -8,11 +8,9 @@ def solution_trigrams(text, number_of_words):
     """
     function that creates new story
     """
-    print('Number of words: ', number_of_words)
-    print('Text: ', text)
     with open(text) as infile:
         data = infile.read()
-        print(create_random_story(create_trigrams(data), number_of_words))
+        sys.stdout.write(create_random_story(create_trigrams(data), number_of_words))
 
 
 
@@ -46,11 +44,12 @@ def create_random_story(words, number_count):
     """
     from random import randint
     all_of_the_keys = list(words.keys())
+    # for key in words:
+    #     if len(words[key]) > 20:
+    #         print('Number of values per key: ', len(words[key]))
     num = randint(0, len(all_of_the_keys))
     story = []
     new_word = all_of_the_keys[num].split(' ')
-    print(all_of_the_keys)
-    print(new_word)
     story.extend(new_word)
     new_word = ' '.join(new_word)
     i = 0
@@ -68,7 +67,6 @@ def create_random_story(words, number_count):
                 i += 1
         else:
             i += 1
-    print(story)
     return ' '.join(story)
 
 
