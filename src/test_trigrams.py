@@ -12,8 +12,8 @@ PARAMS_TABLE = [
         })
         ]
 REMOVE_PUNCTUATION_PARAMS_TABLE = [
-    ('I wish, I may, I wish, I might.\n', 'I wish I may I wish I might'),
-    ('\nI came, I saw\n, I conquered.', 'I came I saw I conquered')]
+    ('I wish, I may, I wish, I might.\n', '', 'I wish I may I wish I might'),
+    ('I came, I saw\n, I conquered.', '', 'I came I saw I conquered')]
 
 
 @pytest.mark.parametrize('text, result', PARAMS_TABLE)
@@ -22,7 +22,7 @@ def test_create_trigrams(text, result):
     assert create_trigrams(text) == result
 
 
-@pytest.mark.parametrize('text, result', REMOVE_PUNCTUATION_PARAMS_TABLE)
-def test_remove_punctuation(text, result):
+@pytest.mark.parametrize('text, empty_str, result', REMOVE_PUNCTUATION_PARAMS_TABLE)
+def test_remove_punctuation(text, empty_str, result):
     from trigrams import remove_punctuation
-    assert remove_punctuation(text) == result
+    assert remove_punctuation(text, empty_str) == result
