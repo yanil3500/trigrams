@@ -1,21 +1,36 @@
 import sys
+import os
+import random
 """
 Solution to trigrams problem
 """
+
+txt_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'story.txt')
+
+
+def main(text_file = txt_file, number_of_words = 300):
+    """
+    responsible for validating that the inputs that are passed are valid
+    """
+    if os.path.isfile(text_file):
+        with open(text_file) as infile:
+            data = infile.read()
+        solution_trigrams(data, number_of_words)
 
 
 def solution_trigrams(text, number_of_words):
     """
     function that creates new story
     """
-    with open(text) as infile:
-        data = infile.read()
-        sys.stdout.write(create_random_story(create_trigrams(data), number_of_words))
-
+    print(create_trigrams(text))
+    print(create_random_story(create_trigrams(text), number_of_words))
 
 
 def create_trigrams(text):
-    text_list = remove_punctuation(text, ' ').split(' ')
+    """
+    function that creates trigrams
+    """
+    text_list = remove_punctuation(text, ' ').split()
     words_trigrams = {}
     for index in range(len(text_list)-2):
         trigram_key = ' '.join(text_list[index:index+2])
@@ -32,10 +47,9 @@ def remove_punctuation(text, punc):
     """
     from string import punctuation
     exclude_punctuation = set(punctuation)
-    text_list = text.replace('\n', ' ')
-    text_list = text_list.replace('--', ' ')
-    text_list = ''.join(punc for punc in text_list if punc not in exclude_punctuation)
-    return text_list
+    text = ''.join(
+        punc for punc in text if punc not in exclude_punctuation).lower()
+    return text
 
 
 def create_random_story(words, number_count):
@@ -43,32 +57,34 @@ def create_random_story(words, number_count):
     returns a new story from dictionary
     """
     from random import randint
-    all_of_the_keys = list(words.keys())
-    # for key in words:
-    #     if len(words[key]) > 20:
-    #         print('Number of values per key: ', len(words[key]))
-    num = randint(0, len(all_of_the_keys))
+    random_key = random.choice(list(words.keys()))
     story = []
-    new_word = all_of_the_keys[num].split(' ')
+    new_word = random_key.split(' ')
     story.extend(new_word)
     new_word = ' '.join(new_word)
     i = 0
-    while i < int(number_count):
+    while i < int(number_count) - 2:
+        values_associated_to_random_key = list(words[random_key])
+        print(values_associated_to_random_key)
+        num = randint(0, len(values_associated_to_random_key)-1)
+        print(num)
+        new_word = values_associated_to_random_key[num]
+        print(new_word)
         if new_word in words:
-            if len(words[new_word]) == 1:
-                story.extend(words[new_word])
-                new_word = story[-2] + ' ' + story[-1]
-                i += 1
-            else:
-                num = randint(0, len(words[new_word])-1)
-                word_to_add = words[new_word][num]
-                story.extend(word_to_add)
-                new_word = story[-2] + ' ' + story[-1]
-                i += 1
+            # word_to_add = words[new_word][num]
+            # story.extend(words[new_word][num])
+            new_word = story[-2] + ' ' + story[-1]
+            i += 1
         else:
             i += 1
+    print()
     return ' '.join(story)
 
 
 if __name__ == '__main__':
-    solution_trigrams(sys.argv[1], sys.argv[2])
+    print(sys.argv)
+    if len(sys.argv) >= 3:
+        main(sys.argv[1], sys.argv[2])
+    else:
+        main()
+
